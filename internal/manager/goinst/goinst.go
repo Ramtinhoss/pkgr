@@ -4,13 +4,13 @@ package goinst
 import (
 	"context"
 	"encoding/json"
-	"io"
 	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
 
 	"github.com/ramtinhoss/pkgr/internal/manager"
+	"github.com/ramtinhoss/pkgr/internal/manager/httpquery"
 	"github.com/ramtinhoss/pkgr/internal/runner"
 )
 
@@ -37,13 +37,10 @@ type searchEntry struct {
 }
 
 func (a *Adapter) Search(ctx context.Context, q string) ([]manager.Package, error) {
-	req, _ := http.NewRequestWithContext(ctx, http.MethodGet, "https://api.pkg.go.dev/search?q="+q, nil)
-	resp, err := a.HTTP.Do(req)
+	body, _, err := httpquery.New(a.HTTP).Get(ctx, "https://api.pkg.go.dev/search?q="+q)
 	if err != nil {
 		return nil, &manager.Error{Manager: a.ID(), Op: manager.OpSearch, Code: manager.CodeNetworkFailure, Err: err}
 	}
-	defer resp.Body.Close()
-	body, _ := io.ReadAll(resp.Body)
 	var arr []searchEntry
 	if err := json.Unmarshal(body, &arr); err != nil {
 		return nil, &manager.Error{Manager: a.ID(), Op: manager.OpSearch, Code: manager.CodeParseError, Err: err}

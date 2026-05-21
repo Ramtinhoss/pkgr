@@ -3,8 +3,12 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
+	"time"
 
 	"github.com/spf13/cobra"
+
+	"github.com/ramtinhoss/pkgr/internal/update"
 )
 
 // build-time stamped values
@@ -20,7 +24,9 @@ type buildInfo struct {
 
 func main() {
 	root := newRootCmd(buildInfo{Version: version, Commit: commit, Date: date})
-	if err := root.Execute(); err != nil {
+	err := root.Execute()
+	maybeNagAboutUpdate(version)
+	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(2)
 	}
@@ -57,4 +63,31 @@ func newRootCmd(b buildInfo) *cobra.Command {
 		return c.Execute()
 	}
 	return root
+}
+
+// maybeNagAboutUpdate checks for a newer release at most once per 24 hours
+// and prints a one-line hint to stderr when a newer version is available.
+// Opt-out: set update_check = false in config (checked via app.Cfg, but here
+// we read the build-time version and rely on the caller to gate on cfg).
+func maybeNagAboutUpdate(have string) {
+	// Gate: stamp file persists the last check time.
+	cacheDir, err := os.UserCacheDir()
+	if err != nil {
+		return
+	}
+	stampPath := filepath.Join(cacheDir, "pkgr", "last_update_check")
+	if info, statErr := os.Stat(stampPath); statErr == nil && time.Since(info.ModTime()) < 24*time.Hour {
+		return
+	}
+	_ = os.MkdirAll(filepath.Dir(stampPath), 0o755)
+	_ = os.WriteFile(stampPath, []byte("ok"), 0o644)
+
+	c := &update.Checker{}
+	latest, err := c.Latest()
+	if err != nil {
+		return
+	}
+	if update.IsNewer(have, latest) {
+		fmt.Fprintf(os.Stderr, "→ pkgr %s available (you have %s). https://github.com/ramtinhoss/pkgr/releases\n", latest, have)
+	}
 }

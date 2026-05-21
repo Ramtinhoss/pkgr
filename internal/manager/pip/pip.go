@@ -5,11 +5,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"os/exec"
 
 	"github.com/ramtinhoss/pkgr/internal/manager"
+	"github.com/ramtinhoss/pkgr/internal/manager/httpquery"
 	"github.com/ramtinhoss/pkgr/internal/runner"
 )
 
@@ -37,22 +37,16 @@ func (a *Adapter) Detect() bool {
 // Exact-match endpoint: https://pypi.org/pypi/<name>/json
 func (a *Adapter) Search(ctx context.Context, q string) ([]manager.Package, error) {
 	url := fmt.Sprintf("https://pypi.org/pypi/%s/json", q)
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := a.HTTP.Do(req)
+	body, status, err := httpquery.New(a.HTTP).Get(ctx, url)
 	if err != nil {
 		return nil, &manager.Error{Manager: a.ID(), Op: manager.OpSearch, Code: manager.CodeNetworkFailure, Err: err}
 	}
-	defer resp.Body.Close()
-	if resp.StatusCode == 404 {
+	if status == 404 {
 		return nil, nil
 	}
-	if resp.StatusCode >= 400 {
-		return nil, &manager.Error{Manager: a.ID(), Op: manager.OpSearch, Code: manager.CodeNetworkFailure, Err: fmt.Errorf("pypi %d", resp.StatusCode)}
+	if status >= 400 {
+		return nil, &manager.Error{Manager: a.ID(), Op: manager.OpSearch, Code: manager.CodeNetworkFailure, Err: fmt.Errorf("pypi %d", status)}
 	}
-	body, _ := io.ReadAll(resp.Body)
 	var p struct {
 		Info struct {
 			Name     string `json:"name"`
@@ -128,7 +122,6 @@ func (a *Adapter) Uninstall(ctx context.Context, names ...string) error {
 func (a *Adapter) Update(ctx context.Context, names ...string) error {
 	args := []string{"install", "--user", "--upgrade"}
 	if len(names) == 0 {
-		// pip has no "update all"; require explicit names. Surface friendly error.
 		return &manager.Error{Manager: a.ID(), Op: manager.OpUpdate, Code: manager.CodeConflict,
 			Err: fmt.Errorf("pip update requires explicit package names")}
 	}
