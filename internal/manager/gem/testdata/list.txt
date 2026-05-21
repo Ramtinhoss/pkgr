@@ -1,0 +1,4 @@
+*** LOCAL GEMS ***
+
+bundler (2.5.9)
+rake (13.2.1, default: 13.0.6)
