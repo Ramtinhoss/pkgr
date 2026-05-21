@@ -17,6 +17,9 @@ type Keys struct {
 	Log           key.Binding
 	Cancel        key.Binding
 	ListInstalled key.Binding
+	ToggleSelect  key.Binding
+	SelectAll     key.Binding
+	ClearSelect   key.Binding
 }
 
 func DefaultKeys() Keys {
@@ -68,6 +71,18 @@ func DefaultKeys() Keys {
 		ListInstalled: key.NewBinding(
 			key.WithKeys("l"),
 			key.WithHelp("l", "list installed from PM"),
+		),
+		ToggleSelect: key.NewBinding(
+			key.WithKeys(" "),
+			key.WithHelp("space", "toggle select"),
+		),
+		SelectAll: key.NewBinding(
+			key.WithKeys("a"),
+			key.WithHelp("a", "select all visible"),
+		),
+		ClearSelect: key.NewBinding(
+			key.WithKeys("A"),
+			key.WithHelp("A", "clear selection"),
 		),
 	}
 }

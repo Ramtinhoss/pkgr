@@ -50,14 +50,18 @@ func (s *HelpScreen) View() string {
 	title := s.services.Theme.Title.Render("Key Bindings")
 	helpText := `
 /            - Open command palette
-i            - Show installed packages
-d            - Mark for delete
-u            - Mark for update
+i            - Install (bulk if selection non-empty)
+r            - Remove (bulk if selection non-empty)
+u            - Update (bulk if selection non-empty)
 o            - Show outdated packages
 l            - List installed packages from selected PM
 L            - Open operation log
+space        - Toggle select current row
+a            - Select all visible rows
+A            - Clear selection
+U            - Update ALL visible (outdated screen)
 :            - Show help
-ESC          - Close overlay
+ESC          - Close overlay / go back
 q            - Quit
 `
 	return fmt.Sprintf("%s\n%s", title, helpText)
