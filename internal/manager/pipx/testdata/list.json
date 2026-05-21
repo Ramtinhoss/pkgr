@@ -1,0 +1,6 @@
+{
+  "venvs": {
+    "black":  {"metadata": {"main_package": {"package_or_url": "black", "package_version": "24.4.2"}}},
+    "ruff":   {"metadata": {"main_package": {"package_or_url": "ruff",  "package_version": "0.4.4"}}}
+  }
+}

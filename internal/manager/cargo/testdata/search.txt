@@ -1,0 +1,2 @@
+ripgrep = "14.1.0"    # ripgrep recursively searches directories
+ripgrep-all = "0.10.5" # ripgrep, but also search in pdfs

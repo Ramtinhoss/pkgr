@@ -2,7 +2,19 @@ package main
 
 import (
 	"github.com/ramtinhoss/pkgr/internal/manager/apt"
+	"github.com/ramtinhoss/pkgr/internal/manager/asdf"
 	"github.com/ramtinhoss/pkgr/internal/manager/brew"
+	"github.com/ramtinhoss/pkgr/internal/manager/bun"
+	"github.com/ramtinhoss/pkgr/internal/manager/cargo"
+	"github.com/ramtinhoss/pkgr/internal/manager/conda"
+	"github.com/ramtinhoss/pkgr/internal/manager/gem"
+	"github.com/ramtinhoss/pkgr/internal/manager/goinst"
+	"github.com/ramtinhoss/pkgr/internal/manager/mamba"
+	"github.com/ramtinhoss/pkgr/internal/manager/mise"
+	"github.com/ramtinhoss/pkgr/internal/manager/pipx"
+	"github.com/ramtinhoss/pkgr/internal/manager/rustup"
+	"github.com/ramtinhoss/pkgr/internal/manager/uv"
+	"github.com/ramtinhoss/pkgr/internal/manager/yarn"
 	"github.com/ramtinhoss/pkgr/internal/manager/dnf"
 	"github.com/ramtinhoss/pkgr/internal/manager/pacman"
 	"github.com/ramtinhoss/pkgr/internal/manager/flatpak"
@@ -35,4 +47,16 @@ func registerAdapters(reg *registry.Registry, r *runner.Runner) {
 	reg.Register(winget.New(r))
 	reg.Register(mas.New(r))
 	reg.Register(pnpm.New(r))
+	reg.Register(asdf.New(r))
+	reg.Register(bun.New(r))
+	reg.Register(cargo.New(r))
+	reg.Register(conda.New(r))
+	reg.Register(mamba.New(r))
+	reg.Register(gem.New(r))
+	reg.Register(goinst.New(r))
+	reg.Register(mise.New(r))
+	reg.Register(pipx.New(r))
+	reg.Register(rustup.New(r))
+	reg.Register(uv.New(r))
+	reg.Register(yarn.New(r))
 }
