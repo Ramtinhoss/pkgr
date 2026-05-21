@@ -6,7 +6,6 @@ import (
 	"io"
 	"log/slog"
 	"os"
-	"path/filepath"
 )
 
 type Options struct {
@@ -16,27 +15,22 @@ type Options struct {
 }
 
 // Setup returns a configured slog.Logger and a closer that flushes
-// and closes underlying file handles.
+// and closes underlying file handles. The log file is rotated at 5 MB
+// and up to 5 backups are kept.
 func Setup(opts Options) (*slog.Logger, func() error, error) {
-	if err := os.MkdirAll(filepath.Dir(opts.Path), 0o755); err != nil {
-		return nil, nil, err
-	}
-	f, err := os.OpenFile(opts.Path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
-	if err != nil {
-		return nil, nil, err
-	}
+	rot := &Rotator{Path: opts.Path, MaxBytes: 5 << 20, MaxFiles: 5}
 
-	var w io.Writer = f
+	var w io.Writer = rot
 	if opts.Verbose {
 		stderr := opts.Stderr
 		if stderr == nil {
 			stderr = os.Stderr
 		}
-		w = io.MultiWriter(f, stderr)
+		w = io.MultiWriter(rot, stderr)
 	}
 
 	h := slog.NewJSONHandler(w, &slog.HandlerOptions{Level: slog.LevelDebug})
 	l := slog.New(h)
 
-	return l, f.Close, nil
+	return l, rot.Close, nil
 }
