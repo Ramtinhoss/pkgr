@@ -1,0 +1,4 @@
+Name       Version          Rev   Tracking         Publisher    Notes
+bare       1.0              5     latest/stable    canonical✓   base
+core22     20240408         1380  latest/stable    canonical✓   base
+ripgrep    14.0.3           21    latest/stable    bossm        -
