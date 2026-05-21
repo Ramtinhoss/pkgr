@@ -1,0 +1,19 @@
+# binaries
+/pkgr
+/dist/
+*.exe
+
+# go
+*.test
+*.out
+coverage.txt
+vendor/
+
+# editor
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# pkgr local state (in case dev uses tool on own repo)
+.pkgr-cache/

@@ -1,0 +1,25 @@
+run:
+  timeout: 5m
+  go: "1.22"
+
+linters:
+  enable:
+    - govet
+    - staticcheck
+    - errcheck
+    - gosec
+    - revive
+    - ineffassign
+    - unused
+    - gofmt
+    - goimports
+    - misspell
+
+linters-settings:
+  gosec:
+    excludes:
+      - G204  # subprocess with variable: that's our entire purpose
+  revive:
+    rules:
+      - name: var-naming
+        disabled: false
