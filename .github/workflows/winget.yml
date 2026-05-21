@@ -1,0 +1,14 @@
+name: winget
+on:
+  release:
+    types: [released]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: vedantmgoyal2009/winget-releaser@v2
+        with:
+          identifier: RamtinHoss.pkgr
+          installers-regex: 'pkgr_.*_windows_.*\.zip$'
+          token: ${{ secrets.WINGET_TOKEN }}
