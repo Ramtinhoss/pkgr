@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/ramtinhoss/pkgr/internal/manager/apt"
+	"github.com/ramtinhoss/pkgr/internal/manager/asdf"
 	"github.com/ramtinhoss/pkgr/internal/manager/brew"
 	"github.com/ramtinhoss/pkgr/internal/manager/dnf"
 	"github.com/ramtinhoss/pkgr/internal/manager/pacman"
@@ -35,4 +36,5 @@ func registerAdapters(reg *registry.Registry, r *runner.Runner) {
 	reg.Register(winget.New(r))
 	reg.Register(mas.New(r))
 	reg.Register(pnpm.New(r))
+	reg.Register(asdf.New(r))
 }
