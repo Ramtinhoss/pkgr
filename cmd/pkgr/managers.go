@@ -9,6 +9,7 @@ import (
 	"github.com/ramtinhoss/pkgr/internal/manager/nix"
 	"github.com/ramtinhoss/pkgr/internal/manager/choco"
 	"github.com/ramtinhoss/pkgr/internal/manager/mas"
+	"github.com/ramtinhoss/pkgr/internal/manager/pnpm"
 	"github.com/ramtinhoss/pkgr/internal/manager/winget"
 	"github.com/ramtinhoss/pkgr/internal/manager/scoop"
 	"github.com/ramtinhoss/pkgr/internal/manager/snap"
@@ -33,4 +34,5 @@ func registerAdapters(reg *registry.Registry, r *runner.Runner) {
 	reg.Register(choco.New(r))
 	reg.Register(winget.New(r))
 	reg.Register(mas.New(r))
+	reg.Register(pnpm.New(r))
 }
