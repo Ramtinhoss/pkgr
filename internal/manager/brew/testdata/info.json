@@ -1,0 +1,3 @@
+[
+  {"name": "ripgrep", "desc": "Search tool like grep written in Rust", "homepage": "https://github.com/BurntSushi/ripgrep", "versions": {"stable": "14.1.0"}, "installed": [{"version": "14.1.0"}]}
+]
