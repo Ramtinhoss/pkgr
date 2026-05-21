@@ -6,6 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/ramtinhoss/pkgr/internal/format"
 	"github.com/ramtinhoss/pkgr/internal/manager"
 	"github.com/ramtinhoss/pkgr/internal/spec"
 )
@@ -48,6 +49,9 @@ func addInstallCmd(root *cobra.Command, flags *rootFlags) {
 				}
 				_ = app.Cache.Invalidate(pm + "/installed")
 				_ = app.Cache.Invalidate(pm + "/outdated")
+			}
+			if flags.JSON {
+				return format.JSONResult(cmd.OutOrStdout(), nil, nil)
 			}
 			return nil
 		},
