@@ -1,0 +1,4 @@
+Name                   Id                              Version   Source
+-------------------------------------------------------------------------
+Ripgrep                BurntSushi.ripgrep              14.1.0    winget
+PowerShell             Microsoft.PowerShell            7.4.1.0   winget
