@@ -101,3 +101,12 @@ func TestRunFakeNonZeroExitReturnsError(t *testing.T) {
 		t.Errorf("Stderr = %q, want %q", string(result.Stderr), "command failed")
 	}
 }
+
+func TestFakeReturnsErrorOnMissingKey(t *testing.T) {
+	f := &Fake{Returns: map[string]FakeResult{}}
+	r := &Runner{Exec: f.Exec}
+	_, err := r.Run(context.Background(), Cmd{Bin: "brew", Args: []string{"unknown"}})
+	if err == nil {
+		t.Fatal("expected error for missing canned reply")
+	}
+}

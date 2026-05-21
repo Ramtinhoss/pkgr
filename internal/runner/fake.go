@@ -42,6 +42,6 @@ func (f *Fake) Exec(ctx context.Context, c Cmd) (Result, error) {
 		return result, nil
 	}
 
-	// Not found; return zero result
-	return Result{}, nil
+	// Not found; return error
+	return Result{}, fmt.Errorf("fake runner: no canned reply for %q", key)
 }
