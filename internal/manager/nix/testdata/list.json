@@ -1,0 +1,5 @@
+{
+  "elements": [
+    {"attrPath": "legacyPackages.x86_64-linux.ripgrep", "active": true, "storePaths": ["/nix/store/...ripgrep-14.1.0"]}
+  ]
+}
