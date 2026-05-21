@@ -34,3 +34,9 @@ make lint       # Run golangci-lint
 - **Project Invariants:** See `CLAUDE.md` (layout, conventions, recipes)
 - **Agent Guidelines:** See `AGENTS.md` (tool selection, editing checklist, risky actions)
 - **Common Workflows:** See `SKILLS.md` (slash commands, adapter recipes, anti-patterns)
+
+## Release Secrets (maintainer only)
+
+- `TAP_TOKEN` — fine-grained PAT for `ramtinhoss/homebrew-pkgr`
+- `SCOOP_TOKEN` — fine-grained PAT for `ramtinhoss/scoop-pkgr`
+- (winget PRs use a GitHub App via the winget-releaser action; configure separately)

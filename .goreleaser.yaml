@@ -1,0 +1,104 @@
+version: 2
+project_name: pkgr
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: pkgr
+    main: ./cmd/pkgr
+    binary: pkgr
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+      - -X main.version={{ .Version }}
+      - -X main.commit={{ .Commit }}
+      - -X main.date={{ .Date }}
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+    ignore:
+      - goos: windows
+        goarch: arm64
+
+archives:
+  - id: pkgr-archive
+    builds: [pkgr]
+    name_template: "pkgr_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    files:
+      - LICENSE
+      - README.md
+      - CLAUDE.md
+
+checksum:
+  name_template: "checksums.txt"
+  algorithm: sha256
+
+signs:
+  - cmd: cosign
+    artifacts: checksum
+    output: true
+    args:
+      - "sign-blob"
+      - "--yes"
+      - "--output-signature=${signature}"
+      - "${artifact}"
+
+sboms:
+  - artifacts: archive
+
+nfpms:
+  - id: pkgr-pkg
+    package_name: pkgr
+    file_name_template: "pkgr_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    homepage: https://github.com/ramtinhoss/pkgr
+    maintainer: Ramtin Hosseini <ramtinhoss@gmail.com>
+    description: Cross-platform package manager TUI/CLI
+    license: MIT
+    formats: [deb, rpm]
+    bindir: /usr/bin
+
+brews:
+  - name: pkgr
+    repository:
+      owner: ramtinhoss
+      name: homebrew-pkgr
+      branch: main
+    homepage: https://github.com/ramtinhoss/pkgr
+    description: One TUI/CLI for brew, apt, dnf, pacman, snap, npm, pip, cargo, …
+    install: |
+      bin.install "pkgr"
+    test: |
+      system "#{bin}/pkgr", "version"
+
+scoops:
+  - name: pkgr
+    repository:
+      owner: ramtinhoss
+      name: scoop-pkgr
+      branch: main
+    homepage: https://github.com/ramtinhoss/pkgr
+    description: Cross-platform package manager TUI/CLI
+    license: MIT
+
+release:
+  github:
+    owner: ramtinhoss
+    name: pkgr
+  draft: false
+  prerelease: auto
+  name_template: "v{{ .Version }}"
+
+changelog:
+  sort: asc
+  use: github
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^ci:"
+      - "^chore:"
