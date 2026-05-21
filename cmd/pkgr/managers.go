@@ -7,6 +7,7 @@ import (
 	"github.com/ramtinhoss/pkgr/internal/manager/pacman"
 	"github.com/ramtinhoss/pkgr/internal/manager/flatpak"
 	"github.com/ramtinhoss/pkgr/internal/manager/nix"
+	"github.com/ramtinhoss/pkgr/internal/manager/choco"
 	"github.com/ramtinhoss/pkgr/internal/manager/scoop"
 	"github.com/ramtinhoss/pkgr/internal/manager/snap"
 	"github.com/ramtinhoss/pkgr/internal/manager/npm"
@@ -27,4 +28,5 @@ func registerAdapters(reg *registry.Registry, r *runner.Runner) {
 	reg.Register(flatpak.New(r))
 	reg.Register(nix.New(r))
 	reg.Register(scoop.New(r))
+	reg.Register(choco.New(r))
 }
