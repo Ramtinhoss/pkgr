@@ -30,7 +30,7 @@ func addInstallCmd(root *cobra.Command, flags *rootFlags) {
 				}
 				pm := parsed.PM
 				if pm == "" {
-					pm, err = resolvePM(app, parsed.Name, flags.Yes)
+					pm, err = resolvePM(cmd.Context(), app, parsed.Name, flags.Yes)
 					if err != nil {
 						return err
 					}
@@ -57,11 +57,11 @@ func addInstallCmd(root *cobra.Command, flags *rootFlags) {
 
 // resolvePM picks the PM for a bare name. If multiple PMs return a hit,
 // prompt the user unless yes=true, in which case pick by ranking.preferred.
-func resolvePM(app *App, name string, yes bool) (string, error) {
+func resolvePM(ctx context.Context, app *App, name string, yes bool) (string, error) {
 	type cand struct{ m manager.Manager }
 	var cands []cand
 	for _, m := range app.Reg.Active() {
-		if pkgs, err := m.Search(context.Background(), name); err == nil && len(pkgs) > 0 {
+		if pkgs, err := m.Search(ctx, name); err == nil && len(pkgs) > 0 {
 			cands = append(cands, cand{m: m})
 		}
 	}
