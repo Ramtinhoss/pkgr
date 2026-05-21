@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/ramtinhoss/pkgr/internal/manager/apt"
 	"github.com/ramtinhoss/pkgr/internal/manager/brew"
+	"github.com/ramtinhoss/pkgr/internal/manager/dnf"
 	"github.com/ramtinhoss/pkgr/internal/manager/npm"
 	"github.com/ramtinhoss/pkgr/internal/manager/pip"
 	"github.com/ramtinhoss/pkgr/internal/registry"
@@ -15,4 +16,5 @@ func registerAdapters(reg *registry.Registry, r *runner.Runner) {
 	reg.Register(npm.New(r))
 	reg.Register(pip.New(r))
 	reg.Register(apt.New(r))
+	reg.Register(dnf.New(r))
 }

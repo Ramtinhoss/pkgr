@@ -1,0 +1,4 @@
+Last metadata expiration check: 0:30:00 ago.
+============================ Name & Summary Matched: ripgrep ============================
+ripgrep.x86_64 : Line oriented search tool using Rust's regex library
+ripgrep-doc.noarch : Documentation files for ripgrep
