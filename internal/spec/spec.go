@@ -4,6 +4,7 @@ package spec
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 )
 
@@ -23,9 +24,14 @@ var (
 // Parse interprets a spec string and returns a Spec or error.
 // Format: name[==version][@pm]
 // Names may include "@scope/" prefix (npm scoped packages).
+// Whitespace anywhere in the string is rejected.
 func Parse(s string) (Spec, error) {
 	if s == "" {
 		return Spec{}, ErrEmpty
+	}
+	// Reject any whitespace — specs must be compact tokens.
+	if strings.TrimSpace(s) != s || strings.ContainsAny(s, " \t\n\r") {
+		return Spec{}, fmt.Errorf("spec: whitespace not allowed: %q", s)
 	}
 
 	// Extract @pm suffix (but allow @ at start for scoped names).
@@ -84,6 +90,14 @@ func Parse(s string) (Spec, error) {
 
 	if name == "" {
 		return Spec{}, ErrNoName
+	}
+
+	// Reject scoped names with empty package part: "@scope/" is not valid.
+	if strings.HasPrefix(name, "@") {
+		slashIdx := strings.Index(name, "/")
+		if slashIdx >= 0 && slashIdx == len(name)-1 {
+			return Spec{}, fmt.Errorf("spec: empty package name after scope in %q", name)
+		}
 	}
 
 	return Spec{Name: name, Version: ver, PM: pm}, nil
