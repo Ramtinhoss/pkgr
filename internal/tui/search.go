@@ -151,22 +151,3 @@ func requestInstall(svc *Services, pmID, name string) tea.Cmd {
 		})}
 	}
 }
-
-// TODO: replace with real impl in T7
-type ConfirmConfig struct {
-	Title string
-	Body  string
-	Sudo  bool
-	OnYes func() tea.Cmd
-}
-
-func NewConfirmScreen(svc *Services, cfg ConfirmConfig) Screen {
-	return &stubConfirmScreen{cfg: cfg}
-}
-
-type stubConfirmScreen struct{ cfg ConfirmConfig }
-
-func (s *stubConfirmScreen) Name() string                         { return "confirm-stub" }
-func (s *stubConfirmScreen) Init() tea.Cmd                        { return nil }
-func (s *stubConfirmScreen) Update(msg tea.Msg) (Screen, tea.Cmd) { return s, nil }
-func (s *stubConfirmScreen) View() string                         { return "confirm: " + s.cfg.Title }
