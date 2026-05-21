@@ -1,0 +1,6 @@
+yarn global v1.22.22
+info "typescript@5.4.2" has binaries:
+   - tsc
+   - tsserver
+info "prettier@3.2.5" has binaries:
+   - prettier

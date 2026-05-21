@@ -14,6 +14,7 @@ import (
 	"github.com/ramtinhoss/pkgr/internal/manager/pipx"
 	"github.com/ramtinhoss/pkgr/internal/manager/rustup"
 	"github.com/ramtinhoss/pkgr/internal/manager/uv"
+	"github.com/ramtinhoss/pkgr/internal/manager/yarn"
 	"github.com/ramtinhoss/pkgr/internal/manager/dnf"
 	"github.com/ramtinhoss/pkgr/internal/manager/pacman"
 	"github.com/ramtinhoss/pkgr/internal/manager/flatpak"
@@ -57,4 +58,5 @@ func registerAdapters(reg *registry.Registry, r *runner.Runner) {
 	reg.Register(pipx.New(r))
 	reg.Register(rustup.New(r))
 	reg.Register(uv.New(r))
+	reg.Register(yarn.New(r))
 }
