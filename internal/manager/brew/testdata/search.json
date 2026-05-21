@@ -1,0 +1,7 @@
+{
+  "formulae": [
+    {"name": "ripgrep", "desc": "Search tool like grep written in Rust", "homepage": "https://github.com/BurntSushi/ripgrep", "versions": {"stable": "14.1.0"}},
+    {"name": "ripgrep-all", "desc": "Wrapper that adds support for pdfs/docs", "homepage": "https://github.com/phiresky/ripgrep-all", "versions": {"stable": "0.10.5"}}
+  ],
+  "casks": []
+}
