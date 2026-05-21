@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"os"
 	"os/exec"
 	"strings"
 )
@@ -41,15 +42,11 @@ type Runner struct {
 func (r *Runner) Run(ctx context.Context, c Cmd) (Result, error) {
 	if r.DryRun {
 		// Format: "→ would exec: [sudo ]<bin> <args>"
-		parts := []string{c.Bin}
-		parts = append(parts, c.Args...)
+		prefix := ""
 		if c.Sudo {
-			parts = []string{"sudo"} // Prepend sudo
-			parts = append(parts, c.Bin)
-			parts = append(parts, c.Args...)
+			prefix = "sudo "
 		}
-		cmdStr := strings.Join(parts, " ")
-		fmt.Fprintf(r.Out, "→ would exec: %s\n", cmdStr)
+		fmt.Fprintf(r.Out, "→ would exec: %s%s %s\n", prefix, c.Bin, strings.Join(c.Args, " "))
 		return Result{Skipped: true}, nil
 	}
 
@@ -74,8 +71,8 @@ func (r *Runner) Run(ctx context.Context, c Cmd) (Result, error) {
 func RealExec(ctx context.Context, c Cmd) (Result, error) {
 	cmd := exec.CommandContext(ctx, c.Bin, c.Args...)
 
-	if c.Env != nil {
-		cmd.Env = c.Env
+	if len(c.Env) > 0 {
+		cmd.Env = append(os.Environ(), c.Env...)
 	}
 
 	if c.Stdin != nil {

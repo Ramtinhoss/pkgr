@@ -3,6 +3,7 @@ package runner
 import (
 	"bytes"
 	"context"
+	"strings"
 	"testing"
 )
 
@@ -108,5 +109,16 @@ func TestFakeReturnsErrorOnMissingKey(t *testing.T) {
 	_, err := r.Run(context.Background(), Cmd{Bin: "brew", Args: []string{"unknown"}})
 	if err == nil {
 		t.Fatal("expected error for missing canned reply")
+	}
+}
+
+func TestDryRunSudoPrefix(t *testing.T) {
+	var out bytes.Buffer
+	r := &Runner{Out: &out, DryRun: true}
+	if _, err := r.Run(context.Background(), Cmd{Bin: "apt-get", Args: []string{"install", "git"}, Sudo: true}); err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(out.String(), "sudo apt-get install git") {
+		t.Fatalf("expected sudo prefix in dry-run, got %q", out.String())
 	}
 }
