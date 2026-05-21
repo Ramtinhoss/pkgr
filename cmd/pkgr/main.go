@@ -45,10 +45,10 @@ func newRootCmd(b buildInfo) *cobra.Command {
 	addRemoveCmd(root, flags)
 	addUpdateCmd(root, flags)
 	// addOutdatedCmd(root, flags)
-	// addPMCmd(root, flags)
-	// addCacheCmd(root, flags)
-	// addDoctorCmd(root, flags)
-	// addConfigCmd(root, flags)
-	// addCompletionCmd(root)
+	addPMCmd(root, flags)
+	addCacheCmd(root, flags)
+	addDoctorCmd(root, flags)
+	addConfigCmd(root, flags)
+	addCompletionCmd(root)
 	return root
 }
