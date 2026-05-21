@@ -5,6 +5,7 @@ import (
 	"github.com/ramtinhoss/pkgr/internal/manager/asdf"
 	"github.com/ramtinhoss/pkgr/internal/manager/brew"
 	"github.com/ramtinhoss/pkgr/internal/manager/bun"
+	"github.com/ramtinhoss/pkgr/internal/manager/cargo"
 	"github.com/ramtinhoss/pkgr/internal/manager/dnf"
 	"github.com/ramtinhoss/pkgr/internal/manager/pacman"
 	"github.com/ramtinhoss/pkgr/internal/manager/flatpak"
@@ -39,4 +40,5 @@ func registerAdapters(reg *registry.Registry, r *runner.Runner) {
 	reg.Register(pnpm.New(r))
 	reg.Register(asdf.New(r))
 	reg.Register(bun.New(r))
+	reg.Register(cargo.New(r))
 }
