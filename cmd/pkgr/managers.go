@@ -10,6 +10,7 @@ import (
 	"github.com/ramtinhoss/pkgr/internal/manager/gem"
 	"github.com/ramtinhoss/pkgr/internal/manager/goinst"
 	"github.com/ramtinhoss/pkgr/internal/manager/mamba"
+	"github.com/ramtinhoss/pkgr/internal/manager/mise"
 	"github.com/ramtinhoss/pkgr/internal/manager/dnf"
 	"github.com/ramtinhoss/pkgr/internal/manager/pacman"
 	"github.com/ramtinhoss/pkgr/internal/manager/flatpak"
@@ -49,4 +50,5 @@ func registerAdapters(reg *registry.Registry, r *runner.Runner) {
 	reg.Register(mamba.New(r))
 	reg.Register(gem.New(r))
 	reg.Register(goinst.New(r))
+	reg.Register(mise.New(r))
 }

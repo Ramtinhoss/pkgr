@@ -1,0 +1,4 @@
+{
+  "node":   [{"version":"20.12.2","requested_version":"20","install_path":"/.../node/20.12.2","source":{"type":".mise.toml"}}],
+  "python": [{"version":"3.12.3","requested_version":"3.12","install_path":"/.../python/3.12.3","source":null}]
+}
