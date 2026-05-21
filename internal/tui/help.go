@@ -54,6 +54,7 @@ i            - Show installed packages
 d            - Mark for delete
 u            - Mark for update
 o            - Show outdated packages
+l            - List installed packages from selected PM
 L            - Open operation log
 :            - Show help
 ESC          - Close overlay

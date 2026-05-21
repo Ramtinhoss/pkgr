@@ -10,8 +10,9 @@ import (
 )
 
 type InstalledScreen struct {
-	svc *Services
-	tbl table.Model
+	svc      *Services
+	tbl      table.Model
+	pmFilter string
 }
 
 func NewInstalledScreen(svc *Services) *InstalledScreen {
@@ -22,6 +23,16 @@ func NewInstalledScreen(svc *Services) *InstalledScreen {
 	}
 	t := table.New(table.WithColumns(cols), table.WithFocused(true))
 	return &InstalledScreen{svc: svc, tbl: t}
+}
+
+func NewInstalledScreenFiltered(svc *Services, pmID string) *InstalledScreen {
+	cols := []table.Column{
+		{Title: "NAME", Width: 24},
+		{Title: "VERSION", Width: 14},
+		{Title: "PM", Width: 8},
+	}
+	t := table.New(table.WithColumns(cols), table.WithFocused(true))
+	return &InstalledScreen{svc: svc, tbl: t, pmFilter: pmID}
 }
 
 func (s *InstalledScreen) Name() string { return "installed" }
@@ -41,6 +52,9 @@ func (s *InstalledScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 	case loadedPackagesMsg:
 		rows := make([]table.Row, 0, len(m.pkgs))
 		for _, p := range m.pkgs {
+			if s.pmFilter != "" && p.Manager != s.pmFilter {
+				continue
+			}
 			rows = append(rows, table.Row{p.Name, p.Version, p.Manager})
 		}
 		s.tbl.SetRows(rows)
@@ -52,7 +66,11 @@ func (s *InstalledScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 
 func (s *InstalledScreen) View() string {
 	var b strings.Builder
-	b.WriteString(s.svc.Theme.Title.Render("Installed"))
+	title := "Installed"
+	if s.pmFilter != "" {
+		title = "Installed (" + s.pmFilter + ")"
+	}
+	b.WriteString(s.svc.Theme.Title.Render(title))
 	b.WriteString("\n\n")
 	b.WriteString(s.tbl.View())
 	return b.String()

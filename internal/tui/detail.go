@@ -29,6 +29,11 @@ func (d *DetailScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 			return d, requestInstall(d.svc, d.pkg.Manager, d.pkg.Name)
 		case key.Matches(m, d.svc.Keys.Remove):
 			return d, requestRemove(d.svc, d.pkg.Manager, d.pkg.Name)
+		case key.Matches(m, d.svc.Keys.ListInstalled):
+			pmID := d.pkg.Manager
+			return d, func() tea.Msg {
+				return PushScreenMsg{Screen: NewInstalledScreenFiltered(d.svc, pmID)}
+			}
 		}
 	}
 	return d, nil
@@ -51,7 +56,7 @@ func (d *DetailScreen) View() string {
 		fmt.Fprintf(&b, "Description: %s\n", d.pkg.Description)
 	}
 	b.WriteString("\n")
-	b.WriteString(d.svc.Theme.Subtle.Render("[i] install  [d] remove  [esc] back"))
+	b.WriteString(d.svc.Theme.Subtle.Render("[i] install  [r] remove  [l] list installed from " + d.pkg.Manager + "  [esc] back"))
 	return b.String()
 }
 

@@ -56,6 +56,12 @@ func (s *SearchScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 			pm := s.tbl.SelectedRow()[2]
 			return s, requestInstall(s.svc, pm, name)
 		}
+		if key.Matches(m, s.svc.Keys.ListInstalled) && len(s.tbl.SelectedRow()) > 0 {
+			pmID := s.tbl.SelectedRow()[2]
+			return s, func() tea.Msg {
+				return PushScreenMsg{Screen: NewInstalledScreenFiltered(s.svc, pmID)}
+			}
+		}
 	case spinner.TickMsg:
 		var c tea.Cmd
 		s.spin, c = s.spin.Update(m)
@@ -129,6 +135,8 @@ func (s *SearchScreen) View() string {
 		b.WriteString(s.spin.View())
 		fmt.Fprintf(&b, " searching %d PMs…", len(s.pending))
 	}
+	b.WriteString("\n")
+	b.WriteString(s.svc.Theme.Subtle.Render("[i] install  [l] installed from PM  [esc] back"))
 	return b.String()
 }
 
