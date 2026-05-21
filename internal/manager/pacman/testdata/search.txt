@@ -1,0 +1,4 @@
+extra/ripgrep 14.1.0-1
+    A search tool that combines the usability of ag with the raw speed of grep
+extra/ripgrep-all 0.10.5-1
+    rga: ripgrep, but also search in PDFs, ebooks, …

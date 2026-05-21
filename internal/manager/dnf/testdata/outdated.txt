@@ -1,0 +1,4 @@
+Last metadata expiration check: 0:01:23 ago.
+
+curl.x86_64                   8.5.0-3.fc40     updates
+glibc.x86_64                  2.39-12.fc40     updates

@@ -1,7 +1,18 @@
 package main
 
 import (
+	"github.com/ramtinhoss/pkgr/internal/manager/apt"
 	"github.com/ramtinhoss/pkgr/internal/manager/brew"
+	"github.com/ramtinhoss/pkgr/internal/manager/dnf"
+	"github.com/ramtinhoss/pkgr/internal/manager/pacman"
+	"github.com/ramtinhoss/pkgr/internal/manager/flatpak"
+	"github.com/ramtinhoss/pkgr/internal/manager/nix"
+	"github.com/ramtinhoss/pkgr/internal/manager/choco"
+	"github.com/ramtinhoss/pkgr/internal/manager/mas"
+	"github.com/ramtinhoss/pkgr/internal/manager/pnpm"
+	"github.com/ramtinhoss/pkgr/internal/manager/winget"
+	"github.com/ramtinhoss/pkgr/internal/manager/scoop"
+	"github.com/ramtinhoss/pkgr/internal/manager/snap"
 	"github.com/ramtinhoss/pkgr/internal/manager/npm"
 	"github.com/ramtinhoss/pkgr/internal/manager/pip"
 	"github.com/ramtinhoss/pkgr/internal/registry"
@@ -13,5 +24,15 @@ func registerAdapters(reg *registry.Registry, r *runner.Runner) {
 	reg.Register(brew.New(r))
 	reg.Register(npm.New(r))
 	reg.Register(pip.New(r))
-	// phases 4 & 5 will append the rest.
+	reg.Register(apt.New(r))
+	reg.Register(dnf.New(r))
+	reg.Register(pacman.New(r))
+	reg.Register(snap.New(r))
+	reg.Register(flatpak.New(r))
+	reg.Register(nix.New(r))
+	reg.Register(scoop.New(r))
+	reg.Register(choco.New(r))
+	reg.Register(winget.New(r))
+	reg.Register(mas.New(r))
+	reg.Register(pnpm.New(r))
 }

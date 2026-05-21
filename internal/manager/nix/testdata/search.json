@@ -1,0 +1,7 @@
+{
+  "legacyPackages.x86_64-linux.ripgrep": {
+    "pname": "ripgrep",
+    "version": "14.1.0",
+    "description": "Search like grep written in Rust"
+  }
+}
