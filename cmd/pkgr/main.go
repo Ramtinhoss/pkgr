@@ -37,8 +37,9 @@ func newRootCmd(b buildInfo) *cobra.Command {
 	bindRootFlags(root, flags)
 	root.AddCommand(newVersionCmd(b))
 	addSearchCmd(root, flags)
-	// TODO: Tasks 9-12 add these subcommands
-	// addListCmd(root, flags)
+	addListCmd(root, flags)
+	addOutdatedCmd(root, flags)
+	// TODO: Tasks 10-12 add these subcommands
 	// addInfoCmd(root, flags)
 	// addInstallCmd(root, flags)
 	// addRemoveCmd(root, flags)
