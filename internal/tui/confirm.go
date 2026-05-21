@@ -53,5 +53,9 @@ func (c *ConfirmScreen) View() string {
 	b.WriteString("\n\n")
 	b.WriteString(c.cfg.Body)
 	b.WriteString("\n\n[y] yes   [n/esc] no")
+	if c.svc.Run != nil && c.svc.Run.DryRun {
+		b.WriteString("\n\n")
+		b.WriteString(c.svc.Theme.Subtle.Render("DRY-RUN: no command will execute"))
+	}
 	return b.String()
 }
