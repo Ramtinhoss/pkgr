@@ -41,9 +41,9 @@ func newRootCmd(b buildInfo) *cobra.Command {
 	addOutdatedCmd(root, flags)
 	// TODO: Tasks 10-12 add these subcommands
 	addInfoCmd(root, flags)
-	// addInstallCmd(root, flags)
-	// addRemoveCmd(root, flags)
-	// addUpdateCmd(root, flags)
+	addInstallCmd(root, flags)
+	addRemoveCmd(root, flags)
+	addUpdateCmd(root, flags)
 	// addOutdatedCmd(root, flags)
 	// addPMCmd(root, flags)
 	// addCacheCmd(root, flags)
