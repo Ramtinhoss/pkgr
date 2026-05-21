@@ -5,17 +5,18 @@ import (
 )
 
 type Keys struct {
-	Quit      key.Binding
-	Help      key.Binding
-	Back      key.Binding
-	Search    key.Binding
-	Install   key.Binding
-	Remove    key.Binding
-	Update    key.Binding
-	Outdated  key.Binding
-	Palette   key.Binding
-	Log       key.Binding
-	Cancel    key.Binding
+	Quit          key.Binding
+	Help          key.Binding
+	Back          key.Binding
+	Search        key.Binding
+	Install       key.Binding
+	Remove        key.Binding
+	Update        key.Binding
+	Outdated      key.Binding
+	Palette       key.Binding
+	Log           key.Binding
+	Cancel        key.Binding
+	ListInstalled key.Binding
 }
 
 func DefaultKeys() Keys {
@@ -63,6 +64,10 @@ func DefaultKeys() Keys {
 		Cancel: key.NewBinding(
 			key.WithKeys("ctrl+c"),
 			key.WithHelp("ctrl+c", "cancel"),
+		),
+		ListInstalled: key.NewBinding(
+			key.WithKeys("l"),
+			key.WithHelp("l", "list installed from PM"),
 		),
 	}
 }
