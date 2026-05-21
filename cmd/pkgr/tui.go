@@ -28,7 +28,7 @@ func addTUICmd(root *cobra.Command, flags *rootFlags) {
 				Orc:   app.Orc,
 				Cache: app.Cache,
 				Run:   app.Run,
-				Theme: tui.DefaultTheme(true),
+				Theme: tui.ResolveTheme(app.Cfg.General.Theme),
 				Keys:  tui.DefaultKeys(),
 			}
 			home := tui.NewHomeScreen(&svc)
