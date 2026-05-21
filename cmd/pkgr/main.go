@@ -50,5 +50,11 @@ func newRootCmd(b buildInfo) *cobra.Command {
 	addDoctorCmd(root, flags)
 	addConfigCmd(root, flags)
 	addCompletionCmd(root)
+	addTUICmd(root, flags)
+
+	root.RunE = func(c *cobra.Command, args []string) error {
+		c.SetArgs([]string{"tui"})
+		return c.Execute()
+	}
 	return root
 }
