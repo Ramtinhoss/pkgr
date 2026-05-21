@@ -41,13 +41,12 @@ func (h *HomeScreen) View() string {
 	return b.String()
 }
 
-// TODO: replace with real impls in T4/T6
-func NewSearchScreen(svc *Services) Screen   { return &stubScreen{name: "search"} }
+// TODO: replace with real impl in T6
 func NewOutdatedScreen(svc *Services) Screen { return &stubScreen{name: "outdated"} }
 
 type stubScreen struct{ name string }
 
-func (s *stubScreen) Name() string                                { return s.name }
-func (s *stubScreen) Init() tea.Cmd                               { return nil }
-func (s *stubScreen) Update(msg tea.Msg) (Screen, tea.Cmd)        { return s, nil }
-func (s *stubScreen) View() string                                { return s.name + " (stub)" }
+func (s *stubScreen) Name() string                         { return s.name }
+func (s *stubScreen) Init() tea.Cmd                        { return nil }
+func (s *stubScreen) Update(msg tea.Msg) (Screen, tea.Cmd) { return s, nil }
+func (s *stubScreen) View() string                         { return s.name + " (stub)" }
