@@ -1,0 +1,1 @@
+ripgrep	com.github.BurntSushi.ripgrep	14.1.0	Fast grep alternative

@@ -1,0 +1,1 @@
+GIMP	org.gimp.GIMP

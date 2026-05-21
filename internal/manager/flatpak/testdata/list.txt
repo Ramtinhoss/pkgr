@@ -1,0 +1,2 @@
+GIMP	org.gimp.GIMP	2.10.36
+LibreOffice	org.libreoffice.LibreOffice	24.2.4
