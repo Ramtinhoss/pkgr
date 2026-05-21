@@ -1,0 +1,4 @@
+[
+  {"name":"react","version":"18.3.1","description":"React is a JavaScript library","links":{"homepage":"https://react.dev"}},
+  {"name":"react-dom","version":"18.3.1","description":"React package for DOM","links":{"homepage":"https://react.dev"}}
+]
